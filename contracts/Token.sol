@@ -25,11 +25,15 @@ contract Token {
 
     function transfer(address _to, uint256 _value)public returns (bool success){
         require(balanceOf[msg.sender] >= _value, "Not enough tokens");
-        require(_to != address(0), "Invalid address");
-        balanceOf[msg.sender] = balanceOf[msg.sender].sub(_value);
-        balanceOf[_to] = balanceOf[_to].add(_value);
-        emit Transfer(msg.sender, _to, _value);
+        _transfer(msg.sender, _to, _value);
         return true;
+    }
+
+    function _transfer(address _from, address _to, uint256 _value) internal {
+        require(_to != address(0), "Invalid address");
+        balanceOf[_from] = balanceOf[msg.sender].sub(_value);
+        balanceOf[_to] = balanceOf[_to].add(_value);
+        emit Transfer(_from, _to, _value);
     }
 
     function approve(address _spender, uint256 _value) public returns (bool success){
@@ -40,7 +44,7 @@ contract Token {
         return true;
     }
 
-    function getName() public view returns (string memory) {
-        return name;
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success){
+        return true;
     }
 }
